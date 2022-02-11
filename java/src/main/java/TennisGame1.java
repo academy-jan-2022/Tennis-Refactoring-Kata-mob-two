@@ -2,9 +2,9 @@ public class TennisGame1 implements TennisGame {
     
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
-    private String playerOneName;
-    private String playerTwoName;
-    private String[] scoreNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+    private final String playerOneName;
+    private final String playerTwoName;
+    private final String[] scoreNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
 
     public TennisGame1(String playerOneName, String playerTwoName) {
         this.playerOneName = playerOneName;
