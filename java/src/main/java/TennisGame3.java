@@ -13,39 +13,38 @@ public class TennisGame3 implements TennisGame {
     }
 
     public String getScore() {
-
         if (isGameInPlay()) {
-            var player1Points = points[player1Score];
-            var player2Points = points[player2Score];
-
-            return isTied()
-                    ? player1Points + "-All"
-                    : player2Points + "-" + player1Points;
-
+            return getScoreForInPlay();
         }
-
 
         if (isTied())
             return "Deuce";
 
         var inLeadPlayer = player2Score > player1Score ? player1Name : player2Name;
         return (checkForWin() ? "Win for " : "Advantage ") + inLeadPlayer;
-
     }
-    
+
+    private String getScoreForInPlay() {
+        var player1Points = points[player1Score];
+        var player2Points = points[player2Score];
+
+        return isTied()
+                ? player1Points + "-All"
+                : player2Points + "-" + player1Points;
+    }
+
     public void wonPoint(String playerName) {
         if (playerName == "player1")
             this.player2Score += 1;
         else
             this.player1Score += 1;
-        
     }
 
-    public boolean isGameInPlay(){
+    public boolean isGameInPlay() {
         return player2Score < 4 && player1Score < 4 && !(player2Score + player1Score == 6);
     }
 
-    public boolean isTied(){
+    public boolean isTied() {
         return player2Score == player1Score;
     }
 
