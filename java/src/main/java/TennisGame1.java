@@ -1,10 +1,10 @@
-
 public class TennisGame1 implements TennisGame {
     
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
     private String playerOneName;
     private String playerTwoName;
+    private String[] scoreNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
 
     public TennisGame1(String playerOneName, String playerTwoName) {
         this.playerOneName = playerOneName;
@@ -20,69 +20,32 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
+        boolean gameIsTied = playerOneScore == playerTwoScore;
+        boolean playerCouldWin = playerOneScore >=4 || playerTwoScore >=4;
 
-        if (playerOneScore == playerTwoScore)
-        {
+        if (gameIsTied) {
             return getTiedScore(playerOneScore);
         }
 
-        if (playerOneScore >=4 || playerTwoScore >=4)
-        {
-            int scoreDifference = getScoreDifference(playerOneScore, playerTwoScore);
-            if (playerOneScore > playerTwoScore) {
-                score = generateAdvantageOrWinScore(playerOneName, scoreDifference);
-            }
-            if (playerOneScore < playerTwoScore) {
-                score = generateAdvantageOrWinScore(playerTwoName, scoreDifference);
-            }
+        if (playerCouldWin) {
+            return advantageOrWinScore();
         }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = playerOneScore;
-                else { score+="-"; tempScore = playerTwoScore;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
-        }
-        return score;
+
+        return scoreNames[playerOneScore] + "-" + scoreNames[playerTwoScore];
     }
 
-    private String generateAdvantageOrWinScore(String playerName, int scoreDifference) {
-        if (scoreDifference == 1) {
-            return "Advantage " + playerName;
-        }
-        return  "Win for " + playerName;
+    private String advantageOrWinScore() {
+        var advantagedPlayer = (playerOneScore > playerTwoScore) ? playerOneName : playerTwoName;
+        return playerAdvantageOrWinScore(advantagedPlayer);
+    }
+
+    private String playerAdvantageOrWinScore(String playerName) {
+        var scoreDifference = getScoreDifference(playerOneScore, playerTwoScore);
+        return (scoreDifference == 1 ? "Advantage "  : "Win for ") + playerName;
     }
 
     private String getTiedScore(int score) {
-        switch (score)
-        {
-            case 0:
-                return "Love-All";
-            case 1:
-                return "Fifteen-All";
-            case 2:
-                return "Thirty-All";
-            default:
-                return "Deuce";
-        }
+        return score > 2 ? "Deuce" : scoreNames[score] + "-All";
     }
 
     private int getScoreDifference(int playerOneScore, int playerTwoScore){
