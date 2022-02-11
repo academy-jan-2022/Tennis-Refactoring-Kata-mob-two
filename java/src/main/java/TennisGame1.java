@@ -22,24 +22,9 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
         int tempScore=0;
-        if (m_score1==m_score2)
+        if (m_score1 == m_score2)
         {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+            score = getTiedScore(m_score1);
         }
         else if (m_score1>=4 || m_score2>=4)
         {
@@ -73,5 +58,20 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    private String getTiedScore(int score) {
+        switch (score)
+        {
+            case 0:
+                return "Love-All";
+            case 1:
+                return "Fifteen-All";
+            case 2:
+                return "Thirty-All";
+            default:
+                return "Deuce";
+        }
+
     }
 }
