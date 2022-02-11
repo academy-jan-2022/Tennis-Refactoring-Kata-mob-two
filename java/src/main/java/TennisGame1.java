@@ -32,19 +32,10 @@ public class TennisGame1 implements TennisGame {
         {
             int scoreDifference = getScoreDifference(playerOneScore, playerTwoScore);
             if (playerOneScore > playerTwoScore) {
-                if (scoreDifference == 1) {
-                    score = "Advantage player1";
-                }
-                else {
-                    score = "Win for player1";
-                }
+                score = generateAdvantageOrWinScore(playerOneName, scoreDifference);
             }
             if (playerOneScore < playerTwoScore) {
-                if (scoreDifference == 1) {
-                    score = "Advantage player2";
-                } else {
-                    score = "Win for player2";
-                }
+                score = generateAdvantageOrWinScore(playerTwoName, scoreDifference);
             }
         }
         else
@@ -71,6 +62,13 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    private String generateAdvantageOrWinScore(String playerName, int scoreDifference) {
+        if (scoreDifference == 1) {
+            return "Advantage " + playerName;
+        }
+        return  "Win for " + playerName;
     }
 
     private String getTiedScore(int score) {
